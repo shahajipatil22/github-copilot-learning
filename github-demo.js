@@ -54,6 +54,7 @@ var getTime = function() {
   return new Date();
 };
 
+
 // find all images without alternate text
 // and give them a red border
 var findImagesWithoutAltText = function() {

@@ -157,7 +157,7 @@ const express = require('express');
 const router = express.Router();
 
 // create get route
-router.get('/welcome', (req, res) => res.send('Hello World!'));
+router.get('/welcome', (req, res) =>  res.status(200).send('Hello World!'));
 
 // create mongoose connection
 const mongoose = require('mongoose');
@@ -193,11 +193,10 @@ router.post('/', validateBookExist, function(req, res, next) {
         return res.status(400).send(error.details[0].message);
     }
     bookService.create(req.body)
-        .then(() => res.json({status: 'success' }))
+        .then((book) => res.json({status: 'success', id: book._id }))
         .catch(err => next(err));
     }
 );
-
 
 // create get book by id route
 router.get('/:id', function(req, res, next) {
@@ -241,7 +240,7 @@ function validateBookInput(book) {
 // create a middleware function to validate record exist for a given book title in mongodbBook
 function validateBookExist(req, res, next){
     bookService.findOne({title: req.body.title})
-        .then(book => book ? res.json({status: 'error', message: 'Book already exist!' }) : next())
+        .then(book => book ? res.status(409).json({status: 'error', message: 'Book already exist!' }) : next())
         .catch(err => next(err));
 }
     

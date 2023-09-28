@@ -17,8 +17,3 @@ app.use('/books',routes);
 // start server
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-// serve react application all routes
-// app.use(express.static('public'));
-
-// app.get('/', (req, res) => res.send('Hello World!'));
-
